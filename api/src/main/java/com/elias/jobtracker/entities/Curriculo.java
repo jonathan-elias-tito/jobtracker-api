@@ -21,12 +21,12 @@ public class Curriculo {
 	private String formacao;
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User user;
+	private Usuario user;
 
 	public Curriculo() {
 	}
 
-	public Curriculo(Long id, String resumo_profissional, String experiencias, String formacao, User user_Id) {
+	public Curriculo(Long id, String resumo_profissional, String experiencias, String formacao, Usuario user_Id) {
 		this.id = id;
 		this.resumoProfissional = resumoProfissional;
 		this.experiencias = experiencias;
@@ -62,7 +62,7 @@ public class Curriculo {
 		return id;
 	}
 
-	public User getUser() {
+	public Usuario getUser() {
 		return user;
 	}
 
