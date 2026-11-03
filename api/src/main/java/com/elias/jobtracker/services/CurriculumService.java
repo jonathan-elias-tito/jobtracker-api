@@ -40,6 +40,20 @@ public class CurriculumService {
 		return resumeRepository.findAll();
 	}
 
+	public Curriculum update(Curriculum curriculum) {
+		Optional<Curriculum> optionalCurriculum = resumeRepository.findById(curriculum.getId());
+		if (optionalCurriculum.isPresent()) {
+			Curriculum realCurriculum = optionalCurriculum.get();
+			realCurriculum.setEducation(curriculum.getEducation());
+			realCurriculum.setExperiences(curriculum.getExperiences());
+			realCurriculum.setProfessionalSummary(curriculum.getProfessionalSummary());
+			realCurriculum.setUser(curriculum.getUser());
+			return resumeRepository.save(realCurriculum);
+		} else {
+			throw new RuntimeException("Curriculum not found with id:" + curriculum.getId());
+		}
+	}
+
 	public void delete(Long id) {
 		if (!resumeRepository.existsById(id)) {
 			throw new RuntimeException("Curriculum not found with id: " + id);
