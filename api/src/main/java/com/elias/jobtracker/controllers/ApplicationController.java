@@ -30,9 +30,10 @@ public class ApplicationController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Application> getApplication(@PathVariable Long id) {
-		Optional<Application> application = applicationService.findById(id);
-		if (application.isPresent()) {
-			return ResponseEntity.ok().body(application.get());
+		Optional<Application> optionalApplication = applicationService.findById(id);
+		if (optionalApplication.isPresent()) {
+			Application realApplication = optionalApplication.get();
+			return ResponseEntity.ok().body(realApplication);
 		} else {
 			throw new RuntimeException("Application not found");
 		}
@@ -45,7 +46,7 @@ public class ApplicationController {
 	}
 
 	@PostMapping("/curriculum/{curriculumId}")
-	public ResponseEntity<Application> insert(@PathVariable Long curriculumId,
+	public ResponseEntity<Application> postApplication(@PathVariable Long curriculumId,
 			@RequestBody Application application) {
 
 		Application savedApplication = applicationService.insert(curriculumId, application);
