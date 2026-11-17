@@ -1,0 +1,75 @@
+<div class="phone-container">
+  <div class="content">
+    <h1>Candidaturas</h1>
+    <p class="subtitle">Acompanhe cada vaga em um só lugar</p>
+
+    <!-- Barra de busca -->
+    <div class="search-box">
+      <input type="text" [(ngModel)]="termoBusca" (input)="aplicarFiltros()" placeholder="Buscar empresa, cargo ou currículo..." />
+    </div>
+
+    <!-- Abas de filtro com contadores dinâmicos -->
+    <div class="filter-tabs">
+      <button [class.active]="filtroStatus === 'TODAS'" (click)="mudarFiltro('TODAS')">
+        Todas {{ candidaturas.length }}
+      </button>
+      <button [class.active]="filtroStatus === 'ANÁLISE'" (click)="mudarFiltro('ANÁLISE')">
+        Análise {{ contarPorStatus('ANÁLISE') }}
+      </button>
+      <button [class.active]="filtroStatus === 'CONTRATADO'" (click)="mudarFiltro('CONTRATADO')">
+        Contratado {{ contarPorStatus('CONTRATADO') }}
+      </button>
+      <button [class.active]="filtroStatus === 'REPROVADO'" (click)="mudarFiltro('REPROVADO')">
+        Reprovado {{ contarPorStatus('REPROVADO') }}
+      </button>
+    </div>
+
+    <!-- Lista de cards -->
+    <!-- Lista de cards -->
+    <div class="lista-cards">
+      <div *ngFor="let app of candidaturasFiltradas" class="card">
+        <div class="card-top">
+          <div>
+            <!-- Exibe o cargo real cadastrado, sem o texto estático "Candidatura #" -->
+            <div class="card-role" style="font-weight: bold; font-size: 15px; color: #111827;">
+              {{ app.role || app.position || 'Cargo não informado' }}
+            </div>
+            <!-- Exibe a empresa -->
+            <div class="card-company" style="font-size: 13px; color: #6b7280; margin-top: 2px;">
+              {{ app.company || 'Empresa não informada' }}
+            </div>
+          </div>
+          <span class="status-badge" [ngClass]="getBadgeClass(app.status)">
+            {{ app.status }}
+          </span>
+        </div>
+
+        <div class="card-bottom" style="margin-top: 12px; display: flex; justify-content: space-between; font-size: 12px; color: #6b7280; border-top: 1px solid #f3f4f6; padding-top: 8px;">
+          <span>Data: {{ app.applicationDate ? (app.applicationDate | date:'dd/MM/yyyy') : 'Sem data' }}</span>
+          <!-- Exibe o nome limpo da versão do currículo -->
+          <span class="cv-used" style="font-weight: 600; color: #059669;">
+            {{ app.curriculum?.education || app.curriculum?.experiences || 'Nenhum CV' }}
+          </span>
+        </div>
+      </div>
+
+      <div *ngIf="candidaturasFiltradas.length === 0" class="empty-msg" style="text-align: center; color: #6b7280; margin-top: 20px;">
+        Nenhuma candidatura encontrada neste filtro.
+      </div>
+    </div>
+  <!-- Menu de navegação inferior -->
+  <nav class="bottom-nav">
+    <a routerLink="/candidaturas" class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+      Candidaturas
+    </a>
+    <a routerLink="/nova" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Nova
+    </a>
+    <a routerLink="/curriculums" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      Currículos
+    </a>
+  </nav>
+</div>

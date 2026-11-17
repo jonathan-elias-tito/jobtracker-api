@@ -1,0 +1,75 @@
+<div class="phone-container">
+  <div class="content">
+    <div class="header-top">
+      <span class="back-arrow" routerLink="/candidaturas"></span>
+      <h1>Nova candidatura</h1>
+    </div>
+
+    <form (ngSubmit)="salvarCandidatura()">
+      <div class="form-group">
+        <label>Cargo *</label>
+        <input type="text" [(ngModel)]="application.role" name="role" placeholder="Ex.: Desenvolvedor Java Júnior" required />
+      </div>
+
+      <div class="form-group">
+        <label>Empresa *</label>
+        <input type="text" [(ngModel)]="application.company" name="company" placeholder="Nome da empresa" required />
+      </div>
+
+      <div class="form-group">
+        <label>Link da vaga</label>
+        <input type="text" [(ngModel)]="application.jobLink" name="jobLink" placeholder="https://" />
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <div class="status-grid">
+          <button type="button"
+                  *ngFor="let s of ['Análise', 'Contratado', 'Reprovado', 'RECUSADA']"
+                  [class.active]="application.status === s"
+                  (click)="application.status = s">
+            {{ s }}
+          </button>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label>Data *</label>
+          <input type="date" [(ngModel)]="application.applicationDate" name="applicationDate" />        </div>
+        <div class="form-group half">
+          <label>Currículo usado *</label>
+          <select [(ngModel)]="application.curriculumId" name="curriculumId" required>
+            <option [ngValue]="null" disabled>Selecione...</option>
+            <option *ngFor="let curr of curriculos" [value]="curr.id">
+              {{ curr.education || 'Currículo #' + curr.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea [(ngModel)]="application.observations" name="observations" placeholder="Contato, salário, próximos passos..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-save">Salvar candidatura</button>
+    </form>
+  </div>
+
+  <!-- Menu de navegação inferior -->
+  <nav class="bottom-nav">
+    <a routerLink="/candidaturas" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+      Candidaturas
+    </a>
+    <a routerLink="/nova" class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Nova
+    </a>
+    <a routerLink="/curriculums" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      Currículos
+    </a>
+  </nav>
+</div>

@@ -1,4 +1,11 @@
 import { Routes } from '@angular/router';
-import { Home } from './features/home/home';
+import { JobListComponent } from './features/job-list/job-list';
+import { ApplicationsComponent } from './features/applications/applications';
+import { CurriculumsComponent } from './features/curriculums/curriculums';
 
-export const routes: Routes = [{ path: '', component: Home }];
+export const routes: Routes = [
+  { path: 'candidaturas', component: JobListComponent },
+  { path: 'nova', component: ApplicationsComponent },
+  { path: 'curriculums', component: CurriculumsComponent },
+  { path: '', redirectTo: 'candidaturas', pathMatch: 'full' }
+];
